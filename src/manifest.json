@@ -2,13 +2,12 @@
     "manifest_version": 2,
 
     "name": "DistrAffliCor",
-    "description": "The DistrAffliCor Extension Corrects your Affliction for Distraction!",
-    "version": "0.1.0",
+    "description": "Correct your Affliction for Distraction!",
+    "version": "0.0.1",
 
-    "permissions": [],
+    "background": {
+        "scripts": [ "background.js" ]
+    },
 
-    "browser_action": {
-        "default_icon": "icon.png",
-        "default_popup": "popup.html"
-    }
+    "permissions": [ "tabs", "idle", "<all_urls>" ]
 }
