@@ -31,7 +31,7 @@ reading something I can’t stop.
 
 Actually, some Pomodoro extensions do *almost* this, but they require
 manually clicking the timer to switch states. I actually use the `Strict
-Workflow`_ extention, and it works great—when I remember and am in the
+Workflow`_ extension, and it works great—when I remember and am in the
 mood to click it to start the timer. And anyway, it’s backward to what I
 want, which is something that will let me get on the web, give me enough
 time to make progress on something (if I’m doing research etc) and then
