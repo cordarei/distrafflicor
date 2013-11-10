@@ -50,7 +50,8 @@ whitelisting URLs. I need to code an options page, and get some icons.
 License
 =======
 
-This software is copyright Joseph Irwin, distributed under the terms of
-the MIT License, unless otherwise stated.
+All files copyright © 2013 Joseph Irwin unless specifically stated
+otherwise.
 
-See the file `LICENSE <LICENSE>`_ for text of the license.
+This software is distributed under the terms of the MIT License. See the
+`LICENSE <LICENSE>`_ file for the text of the license.
