@@ -4,6 +4,12 @@
     "name": "DistrAffliCor",
     "description": "Correct your Affliction for Distraction!",
     "version": "0.0.1",
+    "icons": {
+        "16": "icons/no_distraction_icon_16.png",
+        "19": "icons/no_distraction_icon_19.png",
+        "48": "icons/no_distraction_icon_48.png",
+        "128": "icons/no_distraction_icon_128.png"
+    },
 
     "background": {
         "scripts": [ "background.js" ]
