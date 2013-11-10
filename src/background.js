@@ -27,6 +27,10 @@ function load_settings() {
 
 // Utility Functions
 
+function url_is_http(url) {
+    return url.match(/^http/);
+}
+
 function url_matches_whitelist(url, whitelist) {
     //TODO: implement
     return false;
@@ -58,7 +62,7 @@ function block_tabs() {
     chrome.windows.getAll({populate:true}, function (windows) {
         windows.forEach(function (win) {
             win.tabs.forEach(function(tab) {
-                if (!url_matches_whitelist(tab.url, current_settings.url_whitelist)) {
+                if (!url_matches_whitelist(tab.url, current_settings.url_whitelist) && url_is_http(tab.url)) {
                     chrome.tabs.executeScript(tab.id, {file:'block.js'})
                 }
             });
@@ -70,7 +74,9 @@ function unblock_tabs() {
     chrome.windows.getAll({populate:true}, function (windows) {
         windows.forEach(function (win) {
             win.tabs.forEach(function(tab) {
-                chrome.tabs.executeScript(tab.id, {file:'unblock.js'})
+                if (url_is_http(tab.url)) {
+                    chrome.tabs.executeScript(tab.id, {file:'unblock.js'})
+                }
             });
         });
     });
