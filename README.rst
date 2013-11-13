@@ -44,7 +44,8 @@ Todo
 ====
 
 The core functionality is mostly done, with the exception of
-whitelisting URLs. I need to code an options page, and get some icons.
+whitelisting URLs. I need to code an options page, to add whitelisted
+URLs and set time limits etc.
 
 
 License
