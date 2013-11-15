@@ -43,10 +43,9 @@ kick me off to pull me out of the Wikipedia vortex (oh, Wikipedia).
 Todo
 ====
 
-The core functionality is mostly done, with the exception of
-whitelisting URLs. I need to code an options page, to add whitelisted
-URLs and set time limits etc.
-
+Testing. This will mostly involve using it for a while and seeing if I
+encounter any bugs. After using it for a while I may add it to the
+Chrome Web Store.
 
 License
 =======
