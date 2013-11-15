@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Distrafflicor Options Page</title>
+        <link rel="stylesheet" href="widgets.css">
+        <style type="text/css">
+            #header img {
+                display: inline-block;
+            }
+            #header h1 {
+                display: inline-block;
+            }
+
+            footer {
+                margin-left: 1em;
+                margin-top: 2em;
+            }
+
+            ul#options {
+                list-style: none;
+            }
+            ul#options li {
+                margin: 1em 0;
+            }
+            ul#options li label {
+                font-weight: bold;
+                display: block;
+            }
+
+            #url_whitelist {
+                min-height: 10em;
+                min-width: 30em;
+            }
+
+            #message {
+                display: none;
+            }
+            #message.error {
+                color: red;
+            }
+            #message.success {
+                color: green;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header id="header">
+            <img src="icons/no_distraction_icon_48.png"></img>
+            <h1>Distrafflicor Options</h1>
+        </header>
+
+        <ul id="options">
+            <li>
+                <label for="url_whitelist">Do NOT block or time the following sites:</label>
+                <textarea id="url_whitelist"></textarea>
+            </li>
+
+            <li>
+                <label for="browse_time">Browsing Time:</label>
+                <input id="browse_time" type="number" min="5" max="60" value="20"></input> minutes
+            </li>
+
+            <li>
+                <label for="break_time">Break Time:</label>
+                <input id="break_time" type="number" min="5" max="60" value="10"></input> minutes
+            </li>
+        </ul>
+
+        <footer>
+            <button id="save" type="submit">Save Options</button>
+            <span id="message">Message goes here.</span>
+        </footer>
+    </body>
+
+    <script src="options.js" type="text/javascript"></script>
+</html>

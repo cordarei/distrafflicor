@@ -56,3 +56,10 @@ otherwise.
 
 This software is distributed under the terms of the MIT License. See the
 `LICENSE <LICENSE>`_ file for the text of the license.
+
+src/widgets.css
+---------------
+
+``src/widgets.css`` is included from the Chromium browser source code.
+Copyright © 2012 The Chromium Authors. See `CHROMIUM_LICENSE
+<CHROMIUM_LICENSE>`_ for the license.

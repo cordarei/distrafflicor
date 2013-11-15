@@ -32,8 +32,21 @@ function url_is_http(url) {
 }
 
 function url_matches_whitelist(url, whitelist) {
-    //TODO: implement
-    return false;
+    var parts = url.split("://");
+    var scheme = parts[0];
+    url = parts[1];
+
+    if (url.match(/^localhost/)) {
+        return true;
+    }
+
+    var matched = false;
+    whitelist.forEach(function (white_url) {
+        if (url.match(white_url)) {
+            matched = true;
+        }
+    });
+    return matched;
 }
 
 // add a random amount to a time
