@@ -150,7 +150,7 @@ timer = setInterval(update, 1000);
 
 // add event listener to re-block tabs when user reloads or opens new tab
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-    if (state === "cool_off" && !url_matches_whitelist(tab.url)) {
+    if (state === "cool_off" && !url_matches_whitelist(tab.url, current_settings.url_whitelist)) {
         chrome.tabs.executeScript(tab.id, {file: 'block.js'})
     }
 });
