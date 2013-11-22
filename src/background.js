@@ -70,58 +70,59 @@ var state = "browsing"; // or "cool_off"
 var ticks = 0; //number of ticks (time) in the current state
 var cool_off_time_with_margin = add_random_extra_time(current_settings.cool_off_time);
 
-// execute the 'block.js' for all tabs that don't match the whitelist
-function block_tabs() {
+
+function block_tab(tab) {
+    if (!url_matches_whitelist(tab.url, current_settings.url_whitelist) && url_is_http(tab.url)) {
+        chrome.tabs.executeScript(tab.id, {file:'block.js'});
+    }
+}
+
+function unblock_tab(tab) {
+    if (url_is_http(tab.url)) {
+        chrome.tabs.executeScript(tab.id, {file:'unblock.js'});
+    }
+}
+
+// call `do_fun` on each tab
+function do_for_all_tabs(do_fun) {
     chrome.windows.getAll({populate:true}, function (windows) {
         windows.forEach(function (win) {
-            win.tabs.forEach(function(tab) {
-                if (!url_matches_whitelist(tab.url, current_settings.url_whitelist) && url_is_http(tab.url)) {
-                    chrome.tabs.executeScript(tab.id, {file:'block.js'})
-                }
-            });
+            win.tabs.forEach(do_fun);
         });
     });
 }
 
-function unblock_tabs() {
-    chrome.windows.getAll({populate:true}, function (windows) {
-        windows.forEach(function (win) {
-            win.tabs.forEach(function(tab) {
-                if (url_is_http(tab.url)) {
-                    chrome.tabs.executeScript(tab.id, {file:'unblock.js'})
-                }
-            });
-        });
-    });
+// convenience wrapper
+function block_tabs() {
+    do_for_all_tabs(block_tab);
 }
+
+// convenience wrapper
+function unblock_tabs() {
+    do_for_all_tabs(unblock_tab);
+}
+
 
 function update() {
-
     // first update ticks
-    chrome.idle.queryState(60, function(idle_state) {
-        if (idle_state === "active") {
-            // check if the active tab's URL matches the whitelist
-            chrome.tabs.query({ 'lastFocusedWindow': true, 'active': true }, function (tabs) {
-                tabs.forEach(function (tab) {
-                    if (url_matches_whitelist(tab.url, current_settings.url_whitelist)) {
-                        // time spent on whitelisted pages counts as "cooling off" and not browsing time
-                        if (state === "cool_off") {
+    if (state === "cool_off") {
+        // always count time during cool off
+        ticks++;
+    } else {
+        // if not idle and not viewing whitelist site, count as browsing time
+        chrome.idle.queryState(60, function(idle_state) {
+            if (idle_state === "active") {
+                // check if the active tab's URL matches the whitelist
+                chrome.tabs.query({ 'lastFocusedWindow': true, 'active': true }, function (tabs) {
+                    tabs.forEach(function (tab) {
+                        if (!url_matches_whitelist(tab.url, current_settings.url_whitelist)) {
                             ticks++;
                         }
-                    } else {
-                        // time spent on non-whitelisted sites counts during both browsing and
-                        // cool off, because during cool off they should be hidden anyway
-                        ticks++;
-                    }
+                    });
                 });
-            });
-        } else {
-            if (state === "cool_off") {
-                ticks++;
             }
-            // time spent idle shouldn't count toward browsing time
-        }
-    });
+        });
+    }
 
     // now check elapsed time
     var minutes_elapsed = ticks / 60;
@@ -150,7 +151,7 @@ timer = setInterval(update, 1000);
 
 // add event listener to re-block tabs when user reloads or opens new tab
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-    if (state === "cool_off" && !url_matches_whitelist(tab.url, current_settings.url_whitelist)) {
-        chrome.tabs.executeScript(tab.id, {file: 'block.js'})
+    if (state === "cool_off") {
+        block_tab(tab);
     }
 });
